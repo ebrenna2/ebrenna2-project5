@@ -193,6 +193,7 @@ int main(void) {
         if (render && al_is_event_queue_empty(event_queue)) {
             //render set to false
             render = false;
+            MapUpdateAnims();
             //deals with when game isnt over
             if (!levels.isGameOver()) {
                 //scrolling and following player
@@ -218,6 +219,7 @@ int main(void) {
                 levels.drawTimer(display);
                 //draw that user has 60 seconds per level
                 al_draw_text(font, al_map_rgb(0, 0, 0), 0, 0, 0, "60 seconds per level");
+                levels.drawHealthBar();
             }
             else {
                 //otherwise (if user uses all the time), game is over and ends games

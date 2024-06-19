@@ -33,6 +33,8 @@ public:
 	void drawTimer(ALLEGRO_DISPLAY* display);
 	//deals with allegro events
 	void events();
+	void drawHealthBar();
+	void decrementLives();
 
 	//private variables for the level class
 private:
@@ -44,6 +46,8 @@ private:
 	int counter;
 	bool gameOver;
 	char levelName[20];
+	int playerLives;
+	ALLEGRO_BITMAP* heartImage;
 	ALLEGRO_FONT* font1;
 	ALLEGRO_TIMER* timer;
 	ALLEGRO_EVENT_QUEUE* event_queue;

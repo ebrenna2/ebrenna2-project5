@@ -5,9 +5,9 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
 #include <cstdio>
-
 //set up levels, currentlevel, total levels ,tiem limit, counter, gameover check
-Levels::Levels() :currentLevel(1), totalLevels(3), timeLimit(60), counter(0), gameOver(false) {
+Levels::Levels() :currentLevel(1), totalLevels(3), timeLimit(60), counter(0), gameOver(false), playerLives(3) {
+    heartImage = al_load_bitmap("heart.png");
     //load the font
 	font1 = al_load_ttf_font("AppleGaramond.ttf", 36, 0);
     //make the timer (tick 1 second)
@@ -23,6 +23,7 @@ Levels::Levels() :currentLevel(1), totalLevels(3), timeLimit(60), counter(0), ga
 Levels::~Levels() {
     al_destroy_font(font1);
     al_destroy_timer(timer);
+    al_destroy_bitmap(heartImage);
     al_destroy_event_queue(event_queue);
 }
 
@@ -117,5 +118,20 @@ void Levels::events() {
         {
             updateTimer();
         }
+    }
+}
+
+void Levels::drawHealthBar() {
+    for (int i = 0; i < playerLives; i++) {
+        al_draw_bitmap(heartImage, 0, 450, 0);
+        al_draw_bitmap(heartImage, 35, 450, 0);
+        al_draw_bitmap(heartImage, 70, 450, 0);
+    }
+}
+
+void Levels::decrementLives() {
+    playerLives--;
+    if (playerLives <= 0) {
+        gameOver = true;
     }
 }
