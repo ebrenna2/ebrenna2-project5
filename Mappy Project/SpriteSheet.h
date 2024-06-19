@@ -3,6 +3,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_ttf.h>
 #include <iostream>
 //emma brennan
@@ -13,6 +15,7 @@ class Sprite
 	friend int collided(int x, int y);
 	friend bool endValue(int x, int y);
 	friend bool endGameValue(int x, int y);
+	friend bool collideWithShark(int x, int y);
 public:
 	//setup for functions in sprite
 	Sprite();
@@ -27,6 +30,7 @@ public:
 	int getHeight() {return frameHeight;}
 	bool CollisionEndBlock();
 	bool GameEndBlock();
+	bool sharkCollision();
 	bool jump;
 
 private:
@@ -42,6 +46,6 @@ private:
 	int animationColumns;
 	int animationRows;
 	int animationDirection;
-
+	ALLEGRO_SAMPLE* chomp;
 	ALLEGRO_BITMAP *image;
 };

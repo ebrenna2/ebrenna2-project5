@@ -16,7 +16,7 @@ using namespace std;
 int collided(int x, int y); 
 bool endValue(int x, int y);
 bool endGameValue(int x, int y);
-
+bool collideWithShark(int x, int y);
 int main(void) {
     //initialize width and height, the keys
     const int WIDTH = 900;
@@ -93,6 +93,10 @@ int main(void) {
                     if (keys[RIGHT]) player.UpdateSprites(WIDTH, HEIGHT, 1);
                     //if up arrow key, update sprite to move up
                     if (keys[UP]) player.UpdateSprites(WIDTH, HEIGHT, 2);
+
+                    if (player.sharkCollision()) {
+                        levels.decrementLives();
+                    }
 
                     //render
                     render = true;
@@ -260,6 +264,19 @@ bool endValue(int x, int y)
     data = MapGetBlock(x / mapblockwidth, y / mapblockheight);
 
     if (data->user1 == 10)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+bool collideWithShark(int x, int y)
+{
+    BLKSTR* data;
+    data = MapGetBlock(x / mapblockwidth, y / mapblockheight);
+
+    if (data->user1 == 12)
     {
         return true;
     }

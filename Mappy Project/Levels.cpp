@@ -4,6 +4,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
 #include <cstdio>
 //set up levels, currentlevel, total levels ,tiem limit, counter, gameover check
 Levels::Levels() :currentLevel(1), totalLevels(3), timeLimit(60), counter(0), gameOver(false), playerLives(3) {
@@ -12,6 +14,10 @@ Levels::Levels() :currentLevel(1), totalLevels(3), timeLimit(60), counter(0), ga
 	font1 = al_load_ttf_font("AppleGaramond.ttf", 36, 0);
     //make the timer (tick 1 second)
     timer = al_create_timer(1.0);
+    al_install_audio();
+    al_init_acodec_addon();
+    al_reserve_samples(4);
+    oof = al_load_sample("oof.OGG");
     //make the event queue
     event_queue = al_create_event_queue();
     //start the timer and do the register event sources
@@ -25,6 +31,8 @@ Levels::~Levels() {
     al_destroy_timer(timer);
     al_destroy_bitmap(heartImage);
     al_destroy_event_queue(event_queue);
+    al_destroy_sample(oof);
+
 }
 
 //initialize everything (using this->, 
@@ -130,6 +138,7 @@ void Levels::drawHealthBar() {
 }
 
 void Levels::decrementLives() {
+    al_play_sample(oof, 0.25, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
     playerLives--;
     if (playerLives <= 0) {
         gameOver = true;

@@ -1,3 +1,4 @@
+
 #include "SpriteSheet.h"
 //emma brennan
 //setup - image is null
@@ -28,6 +29,11 @@ void Sprite::InitSprites(int width, int height, int xInit, int yInit)
 	frameHeight = 32;
 	animationColumns = 5;
 	animationDirection = 1;
+
+	al_install_audio();
+	al_init_acodec_addon();
+	al_reserve_samples(4);
+	chomp = al_load_sample("chomp.OGG");
 
 	image = al_load_bitmap("newfishy.bmp");
 	al_convert_mask_to_alpha(image, al_map_rgb(255,0,255));
@@ -139,6 +145,8 @@ void Sprite::UpdateSprites(int width, int height, int dir)
         x = oldx;
         y = oldy;
     }
+
+
 }
 
 //gets the value for the collision end block (for the next level), checks if sprite is there
@@ -157,6 +165,17 @@ bool Sprite::GameEndBlock()
 		return true;
 	else
 		return false;
+}
+bool Sprite::sharkCollision()
+{
+	if (collideWithShark(x + frameWidth / 2, y + frameHeight + 5)) {
+		al_play_sample(chomp, 3, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 //draws the sprite to the screen based on the direction

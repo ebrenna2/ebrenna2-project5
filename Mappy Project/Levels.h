@@ -5,6 +5,8 @@
 #include "mappy_A5.h"
 #include "SpriteSheet.h"
 #include <allegro5/allegro_font.h>
+#include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_audio.h>
 //levels class declaration
 class Levels {
 public:
@@ -50,6 +52,7 @@ private:
 	ALLEGRO_BITMAP* heartImage;
 	ALLEGRO_FONT* font1;
 	ALLEGRO_TIMER* timer;
+	ALLEGRO_SAMPLE* oof;
 	ALLEGRO_EVENT_QUEUE* event_queue;
 };
 
